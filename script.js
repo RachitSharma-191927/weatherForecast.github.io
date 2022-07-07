@@ -2,7 +2,7 @@ let bt = document.querySelector("#searchBt");
 let locations = document.querySelector(".search_bar");
 
 let access_keys = {
-  1: "f4d246e55911f558c8073e65b1362bc9",
+  1: "pk.eyJ1IjoicmFjaGl0c2hhcm1hcmFzaHIiLCJhIjoiY2t1bGtudnJ6MWg0aTJvb3o0cGZkaG5iYSJ9._WOT_slnuT6NEwgoqYRKBA",
   2: "30f21061e561c353afd1830e2d827939",
 };
 
@@ -19,18 +19,17 @@ const datarequest = async (datas, ur) => {
 bt.addEventListener("click", async () => {
   erase();
   var datas = {
-    access_key: access_keys[1],
-    query: `${locations.value}`,
+    access_token: access_keys[1],
   };
 
   var data = await datarequest(
     datas,
-    "http://api.positionstack.com/v1/forward"
+    `https://api.mapbox.com/geocoding/v5/mapbox.places/${locations.value}.json`
   );
 
   var datas = {
-    lat: data.data[0].latitude,
-    lon: data.data[0].longitude,
+    lat: data.features[0].geometry.coordinates[1],
+    lon: data.features[0].geometry.coordinates[0],
     appid: access_keys[2],
     units: "metric",
   };
